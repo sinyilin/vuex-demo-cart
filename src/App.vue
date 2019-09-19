@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-md-8">
         <h1 class="page-header">VUEJS 實戰 - <small>5倍商城</small></h1>
-        <div v-if="filteredItems.length == 0"><h2>無符合條件之商品</h2></div>
+        <div v-if="filteredItems.length === 0"><h2>無符合條件之商品</h2></div>
         <div class="item" v-for="item in filteredItems.slice(pageStart,pageStart+countOfPage)" :key="item._id">
           <h2>{{ item.name }}</h2>
           <img class="item-img img-responsive" :src="item.picture" alt="">
@@ -17,21 +17,20 @@
         <hr>
 
         <!--Pager -->
-        <ul class="pagination" v-if="filteredItems.length != 0">
+        <ul class="pagination" v-if="true">
           <li @click.prevent="setPage(currentPage-1)">
             <a href="#" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
-          </li>
-          <li v-for="i in totalPage" @click.prevent="setPage(i)" :class="{'active': i == currentPage}"><a href="#">{{i}}</a></li>
-         
+          </li>   
+          <li v-for="i in totalPage" @click.prevent="setPage(i)"><a href="#">{{i}}</a></li>
           <li @click.prevent="setPage(currentPage+1)">
             <a href="#" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>
         </ul>
-
+       
       </div>
 
       <!-- Blog Sidebar Widgets Column -->
@@ -79,38 +78,47 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import axios from 'axios/dist/axios.min.js'
+
+import store from './store'
 
 export default {
   name: 'app',
-  data(){
-    return{
-      items:[],
-      cart:[],
-      total:0,
-      searchName:'',
-      countOfPage:10, //一頁要有幾筆
-      currentPage:1,  //目前在哪一頁
-
-    }
-  },created() {
-    axios.get('http://localhost:9090/ItemList').then(
-      res => {
-        this.items = res.data;
-    });    
-  },computed: {
+  created() {
+    store.dispatch('getItems');
+  },
+  computed: {
+    items(){
+      return store.state.items;
+    },
+    cart(){
+      return store.state.cart;
+    }, 
+    total(){
+      return store.state.total;
+    },
+    searchName(){
+      return store.state.searchName;
+    },
+    countOfPage(){
+      return store.state.countOfPage;
+    },
+    currentPage(){
+      return store.state.currentPage;
+    },
     filteredItems(){
-      this.currentPage = 1;
-      return this.items.filter(d => d.name.toLowerCase().includes(this.searchName.toLowerCase()));
+      console.log("dfsafd");
+      console.log(store.getters.filteredItems);
+      console.log(store.getters.filteredItems.length);
+      return store.getters.filteredItems;
     },
     totalPage(){
-      return Math.ceil( this.filteredItems.length / this.countOfPage);
+      return store.getters.totalPage;
     },
     pageStart(){
-      return (this.currentPage-1)*10;
-    },
-  },methods: {
+      return store.getters.pageStart;
+    }
+  },
+  methods: {
     setPage(page){
       if (page > 0 && page <= this.totalPage){
         this.currentPage = page;
@@ -158,3 +166,4 @@ export default {
   margin-top: 60px;
 }
 </style>
+
