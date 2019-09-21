@@ -6,6 +6,8 @@
       <div class="col-md-8">
         <h1 class="page-header">VUEJS 實戰 - <small>5倍商城</small></h1>
         <div v-if="filteredItems.length === 0"><h2>無符合條件之商品</h2></div>
+        <pordList :item="item" v-for="item in filteredItems.slice(pageStart,pageStart+countOfPage)" :key="item._id" ></pordList>
+        <!--
         <div class="item" v-for="item in filteredItems.slice(pageStart,pageStart+countOfPage)" :key="item._id">
           <h2>{{ item.name }}</h2>
           <img class="item-img img-responsive" :src="item.picture" alt="">
@@ -13,7 +15,7 @@
           <p class="item-price ">$ {{item.price}} </p>
           <a class="btn btn-primary " @click.prevent="addItems(item)" href="# ">放入購物車 <span class="glyphicon glyphicon-chevron-right "></span></a>
         </div>
-
+        -->
         <hr>
 
         <!--Pager -->
@@ -23,7 +25,7 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>   
-          <li v-for="i in totalPage" @click.prevent="setPage(i)"><a href="#">{{i}}</a></li>
+          <li v-for="i in totalPage" @click.prevent="setPage(i)" :class="{'active': i == currentPage}"><a href="#">{{i}}</a></li>
           <li @click.prevent="setPage(currentPage+1)">
             <a href="#" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
@@ -80,9 +82,13 @@
 <script>
 
 import store from './store'
+import pordList from './components/productionList.vue'
 
 export default {
   name: 'app',
+  components:{
+    pordList
+  },
   created() {
     store.dispatch('getItems');
   },
@@ -112,6 +118,7 @@ export default {
       return store.getters.filteredItems;
     },
     totalPage(){
+      console.log(store.getters.totalPage);
       return store.getters.totalPage;
     },
     pageStart(){
@@ -123,23 +130,8 @@ export default {
       if (page > 0 && page <= this.totalPage){
         this.currentPage = page;
       } 
-    },
-    addItems(item){
-      //購物車裡已有
-      let idx = this.cart.findIndex(d => d.id === item._id);
-      if( idx > -1){
-        this.cart[idx].qyt ++;
-      }else{
-        this.cart.push({
-          id:item._id,
-          name:item.name,
-          price:item.price,
-          qyt:1
-        });
-      }
-      this.total += item.price;
-      
-    },plus(item){
+    }
+    ,plus(item){
       item.qyt++;
       this.total += item.price;
 
