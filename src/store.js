@@ -31,6 +31,9 @@ export default new Vuex.Store({
     },
     setCurrentPage(state, val){
       state.currentPage = val;
+    },
+    setSearchName(state, val){
+      state.searchName = val;
     }
     
   },
@@ -46,6 +49,9 @@ export default new Vuex.Store({
     setCurrentPage(context,playload){
       // console.log(playload);
       context.commit('setCurrentPage',playload);
+    },
+    setSearchName(context,playload){
+      context.commit('setSearchName',playload);
     }
   }
 })

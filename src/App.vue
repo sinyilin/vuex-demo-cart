@@ -39,7 +39,8 @@
 
       <!-- Blog Sidebar Widgets Column -->
       <div class="col-md-4 ">
-
+        <searchBox></searchBox>
+        <!--
         <div class="well ">
           <h4>商品搜尋</h4>
           <div class="input-group ">
@@ -48,9 +49,8 @@
                 <button class="btn btn-default"><span class="glyphicon glyphicon-search "></span></button>
             </span>
           </div>
-          <!-- /.input-group -->
         </div>
-
+        -->
         <hr>
 
         <div class="well cart">
@@ -86,12 +86,14 @@
 import store from './store'
 import pordList from './components/productionList.vue'
 import pagination from './components/pagination.vue'
+import searchBox from './components/searchBox.vue'
 
 export default {
   name: 'app',
   components:{
     pordList,
-    pagination
+    pagination,
+    searchBox
   },
   created() {
     store.dispatch('getItems');
@@ -105,9 +107,6 @@ export default {
     }, 
     total(){
       return store.state.total;
-    },
-    searchName(){
-      return store.state.searchName;
     },
     countOfPage(){
       return store.state.countOfPage;
@@ -130,12 +129,8 @@ export default {
     }
   },
   methods: {
-    setPage(page){
-      if (page > 0 && page <= this.totalPage){
-        this.currentPage = page;
-      } 
-    }
-    ,plus(item){
+    
+    plus(item){
       item.qyt++;
       this.total += item.price;
 
