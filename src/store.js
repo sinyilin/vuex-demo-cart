@@ -20,7 +20,6 @@ export default new Vuex.Store({
     },
     totalPage(state, getters){
       return Math.ceil( getters.filteredItems.length / state.countOfPage);
-      return 5;
     },
     pageStart(state, getters){
       return (state.currentPage-1)*10;
@@ -28,9 +27,12 @@ export default new Vuex.Store({
   },
   mutations: {
     setItem(state, val){
-      console.log(val);
       state.items = val;
+    },
+    setCurrentPage(state, val){
+      state.currentPage = val;
     }
+    
   },
   actions: {
     getItems(context){
@@ -40,6 +42,10 @@ export default new Vuex.Store({
           //context.commit('Mutation名稱',‘傳送的值’);
           context.commit('setItem',res.data);
       });
-    }   
+    },
+    setCurrentPage(context,playload){
+      // console.log(playload);
+      context.commit('setCurrentPage',playload);
+    }
   }
 })

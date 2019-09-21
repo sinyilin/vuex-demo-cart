@@ -19,6 +19,8 @@
         <hr>
 
         <!--Pager -->
+        <pagination></pagination>
+        <!--
         <ul class="pagination" v-if="true">
           <li @click.prevent="setPage(currentPage-1)">
             <a href="#" aria-label="Previous">
@@ -32,7 +34,7 @@
             </a>
           </li>
         </ul>
-       
+       -->
       </div>
 
       <!-- Blog Sidebar Widgets Column -->
@@ -83,11 +85,13 @@
 
 import store from './store'
 import pordList from './components/productionList.vue'
+import pagination from './components/pagination.vue'
 
 export default {
   name: 'app',
   components:{
-    pordList
+    pordList,
+    pagination
   },
   created() {
     store.dispatch('getItems');

@@ -27,10 +27,7 @@ export default {
     computed: {
         cart(){
             return store.state.cart;
-        },
-        totalPage(){
-            return store.state.totalPage;
-        }        
+        }    
     },
     methods: {
         addItems(item){
@@ -40,10 +37,10 @@ export default {
                 this.cart[idx].qyt ++;
             }else{
                 this.cart.push({
-                id:item._id,
-                name:item.name,
-                price:item.price,
-                qyt:1
+                    id:item._id,
+                    name:item.name,
+                    price:item.price,
+                    qyt:1
                 });
             }
             this.total += item.price;    
