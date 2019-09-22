@@ -27,7 +27,15 @@ export default {
     computed: {
         cart(){
             return store.state.cart;
-        }    
+        },
+        total:{
+            get(){
+                return store.state.total;
+            },
+            set(val){
+                store.dispatch('setTotal',val);
+            }
+        }
     },
     methods: {
         addItems(item){

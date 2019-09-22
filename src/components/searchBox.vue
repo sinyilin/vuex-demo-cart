@@ -23,7 +23,6 @@ export default {
             },
             set(val){
                 store.dispatch('setSearchName',val);
-                // store.dispatch('setSearchName',val);
             }
             
         }

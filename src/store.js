@@ -34,6 +34,12 @@ export default new Vuex.Store({
     },
     setSearchName(state, val){
       state.searchName = val;
+    },
+    setTotal(state, val){
+      state.total = val;
+    },
+    setCart(state,val){
+      state.cart = val;
     }
     
   },
@@ -52,6 +58,12 @@ export default new Vuex.Store({
     },
     setSearchName(context,playload){
       context.commit('setSearchName',playload);
+    },
+    setTotal(context,playload){
+      context.commit('setTotal',playload);
+    },
+    setCart(context,playload){
+      context.commit('setCart',playload);
     }
   }
 })
